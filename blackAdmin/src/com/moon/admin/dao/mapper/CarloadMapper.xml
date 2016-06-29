@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moon.admin.dao.mapper.CarloadMapper" >
+  <resultMap id="BaseResultMap" type="com.moon.admin.po.Carload" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="APPNO" property="appno" jdbcType="VARCHAR" />
+    <result column="LOANPERSONNAME" property="loanpersonname" jdbcType="VARCHAR" />
+    <result column="IDCARD" property="idcard" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="MARRIAGE" property="marriage" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="POST" property="post" jdbcType="VARCHAR" />
+    <result column="COMPANYPHONE" property="companyphone" jdbcType="VARCHAR" />
+    <result column="SENCODCONTACT" property="sencodcontact" jdbcType="VARCHAR" />
+    <result column="SENCODPHONE" property="sencodphone" jdbcType="VARCHAR" />
+    <result column="LOANAMOUNT" property="loanamount" jdbcType="DECIMAL" />
+    <result column="LOANLIMIT" property="loanlimit" jdbcType="INTEGER" />
+    <result column="LOANLIMITBEGIN" property="loanlimitbegin" jdbcType="DATE" />
+    <result column="LOANLIMITEND" property="loanlimitend" jdbcType="DATE" />
+    <result column="PAYRATE" property="payrate" jdbcType="VARCHAR" />
+    <result column="CARLOANTYPE" property="carloantype" jdbcType="VARCHAR" />
+    <result column="CARBRANDSTYLE" property="carbrandstyle" jdbcType="VARCHAR" />
+    <result column="CARTRADEMARK" property="cartrademark" jdbcType="VARCHAR" />
+    <result column="CARREGCITY" property="carregcity" jdbcType="VARCHAR" />
+    <result column="CARENGINENO" property="carengineno" jdbcType="VARCHAR" />
+    <result column="CARFRAMENO" property="carframeno" jdbcType="VARCHAR" />
+    <result column="CARBUYTIME" property="carbuytime" jdbcType="DATE" />
+    <result column="CARPRICE" property="carprice" jdbcType="DECIMAL" />
+    <result column="EVALUATEPRICE" property="evaluateprice" jdbcType="DECIMAL" />
+    <result column="EVALUATOR" property="evaluator" jdbcType="VARCHAR" />
+    <result column="EVALUATETIME" property="evaluatetime" jdbcType="DATE" />
+    <result column="LIABLEPERSON1" property="liableperson1" jdbcType="VARCHAR" />
+    <result column="LIABLEPERSON2" property="liableperson2" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATEID" property="createid" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UPDATEID" property="updateid" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.moon.admin.po.CarloadWithBLOBs" extends="BaseResultMap" >
+    <result column="CENSUSADRRESS" property="censusadrress" jdbcType="LONGVARCHAR" />
+    <result column="ADRRESS" property="adrress" jdbcType="LONGVARCHAR" />
+    <result column="COMPANY" property="company" jdbcType="LONGVARCHAR" />
+    <result column="LOANUSAGE" property="loanusage" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, APPNO, LOANPERSONNAME, IDCARD, GENDER, AGE, MARRIAGE, TELEPHONE, POST, COMPANYPHONE, 
+    SENCODCONTACT, SENCODPHONE, LOANAMOUNT, LOANLIMIT, LOANLIMITBEGIN, LOANLIMITEND, 
+    PAYRATE, CARLOANTYPE, CARBRANDSTYLE, CARTRADEMARK, CARREGCITY, CARENGINENO, CARFRAMENO, 
+    CARBUYTIME, CARPRICE, EVALUATEPRICE, EVALUATOR, EVALUATETIME, LIABLEPERSON1, LIABLEPERSON2, 
+    STATUS, CREATEID, CREATETIME, UPDATEID, UPDATETIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CENSUSADRRESS, ADRRESS, COMPANY, LOANUSAGE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.moon.admin.po.CarloadExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from m_carloan_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.moon.admin.po.CarloadExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from m_carloan_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from m_carloan_form
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_carloan_form
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.moon.admin.po.CarloadWithBLOBs" >
+    insert into m_carloan_form (ID, APPNO, LOANPERSONNAME, 
+      IDCARD, GENDER, AGE, 
+      MARRIAGE, TELEPHONE, POST, 
+      COMPANYPHONE, SENCODCONTACT, SENCODPHONE, 
+      LOANAMOUNT, LOANLIMIT, LOANLIMITBEGIN, 
+      LOANLIMITEND, PAYRATE, CARLOANTYPE, 
+      CARBRANDSTYLE, CARTRADEMARK, CARREGCITY, 
+      CARENGINENO, CARFRAMENO, CARBUYTIME, 
+      CARPRICE, EVALUATEPRICE, EVALUATOR, 
+      EVALUATETIME, LIABLEPERSON1, LIABLEPERSON2, 
+      STATUS, CREATEID, CREATETIME, 
+      UPDATEID, UPDATETIME, CENSUSADRRESS, 
+      ADRRESS, COMPANY, LOANUSAGE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{appno,jdbcType=VARCHAR}, #{loanpersonname,jdbcType=VARCHAR}, 
+      #{idcard,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{marriage,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, 
+      #{companyphone,jdbcType=VARCHAR}, #{sencodcontact,jdbcType=VARCHAR}, #{sencodphone,jdbcType=VARCHAR}, 
+      #{loanamount,jdbcType=DECIMAL}, #{loanlimit,jdbcType=INTEGER}, #{loanlimitbegin,jdbcType=DATE}, 
+      #{loanlimitend,jdbcType=DATE}, #{payrate,jdbcType=VARCHAR}, #{carloantype,jdbcType=VARCHAR}, 
+      #{carbrandstyle,jdbcType=VARCHAR}, #{cartrademark,jdbcType=VARCHAR}, #{carregcity,jdbcType=VARCHAR}, 
+      #{carengineno,jdbcType=VARCHAR}, #{carframeno,jdbcType=VARCHAR}, #{carbuytime,jdbcType=DATE}, 
+      #{carprice,jdbcType=DECIMAL}, #{evaluateprice,jdbcType=DECIMAL}, #{evaluator,jdbcType=VARCHAR}, 
+      #{evaluatetime,jdbcType=DATE}, #{liableperson1,jdbcType=VARCHAR}, #{liableperson2,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updateid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, #{censusadrress,jdbcType=LONGVARCHAR}, 
+      #{adrress,jdbcType=LONGVARCHAR}, #{company,jdbcType=LONGVARCHAR}, #{loanusage,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.moon.admin.po.CarloadWithBLOBs" >
+    insert into m_carloan_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appno != null" >
+        APPNO,
+      </if>
+      <if test="loanpersonname != null" >
+        LOANPERSONNAME,
+      </if>
+      <if test="idcard != null" >
+        IDCARD,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="marriage != null" >
+        MARRIAGE,
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE,
+      </if>
+      <if test="post != null" >
+        POST,
+      </if>
+      <if test="companyphone != null" >
+        COMPANYPHONE,
+      </if>
+      <if test="sencodcontact != null" >
+        SENCODCONTACT,
+      </if>
+      <if test="sencodphone != null" >
+        SENCODPHONE,
+      </if>
+      <if test="loanamount != null" >
+        LOANAMOUNT,
+      </if>
+      <if test="loanlimit != null" >
+        LOANLIMIT,
+      </if>
+      <if test="loanlimitbegin != null" >
+        LOANLIMITBEGIN,
+      </if>
+      <if test="loanlimitend != null" >
+        LOANLIMITEND,
+      </if>
+      <if test="payrate != null" >
+        PAYRATE,
+      </if>
+      <if test="carloantype != null" >
+        CARLOANTYPE,
+      </if>
+      <if test="carbrandstyle != null" >
+        CARBRANDSTYLE,
+      </if>
+      <if test="cartrademark != null" >
+        CARTRADEMARK,
+      </if>
+      <if test="carregcity != null" >
+        CARREGCITY,
+      </if>
+      <if test="carengineno != null" >
+        CARENGINENO,
+      </if>
+      <if test="carframeno != null" >
+        CARFRAMENO,
+      </if>
+      <if test="carbuytime != null" >
+        CARBUYTIME,
+      </if>
+      <if test="carprice != null" >
+        CARPRICE,
+      </if>
+      <if test="evaluateprice != null" >
+        EVALUATEPRICE,
+      </if>
+      <if test="evaluator != null" >
+        EVALUATOR,
+      </if>
+      <if test="evaluatetime != null" >
+        EVALUATETIME,
+      </if>
+      <if test="liableperson1 != null" >
+        LIABLEPERSON1,
+      </if>
+      <if test="liableperson2 != null" >
+        LIABLEPERSON2,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createid != null" >
+        CREATEID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="updateid != null" >
+        UPDATEID,
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME,
+      </if>
+      <if test="censusadrress != null" >
+        CENSUSADRRESS,
+      </if>
+      <if test="adrress != null" >
+        ADRRESS,
+      </if>
+      <if test="company != null" >
+        COMPANY,
+      </if>
+      <if test="loanusage != null" >
+        LOANUSAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="appno != null" >
+        #{appno,jdbcType=VARCHAR},
+      </if>
+      <if test="loanpersonname != null" >
+        #{loanpersonname,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marriage != null" >
+        #{marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="companyphone != null" >
+        #{companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sencodcontact != null" >
+        #{sencodcontact,jdbcType=VARCHAR},
+      </if>
+      <if test="sencodphone != null" >
+        #{sencodphone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanamount != null" >
+        #{loanamount,jdbcType=DECIMAL},
+      </if>
+      <if test="loanlimit != null" >
+        #{loanlimit,jdbcType=INTEGER},
+      </if>
+      <if test="loanlimitbegin != null" >
+        #{loanlimitbegin,jdbcType=DATE},
+      </if>
+      <if test="loanlimitend != null" >
+        #{loanlimitend,jdbcType=DATE},
+      </if>
+      <if test="payrate != null" >
+        #{payrate,jdbcType=VARCHAR},
+      </if>
+      <if test="carloantype != null" >
+        #{carloantype,jdbcType=VARCHAR},
+      </if>
+      <if test="carbrandstyle != null" >
+        #{carbrandstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="cartrademark != null" >
+        #{cartrademark,jdbcType=VARCHAR},
+      </if>
+      <if test="carregcity != null" >
+        #{carregcity,jdbcType=VARCHAR},
+      </if>
+      <if test="carengineno != null" >
+        #{carengineno,jdbcType=VARCHAR},
+      </if>
+      <if test="carframeno != null" >
+        #{carframeno,jdbcType=VARCHAR},
+      </if>
+      <if test="carbuytime != null" >
+        #{carbuytime,jdbcType=DATE},
+      </if>
+      <if test="carprice != null" >
+        #{carprice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateprice != null" >
+        #{evaluateprice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluator != null" >
+        #{evaluator,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluatetime != null" >
+        #{evaluatetime,jdbcType=DATE},
+      </if>
+      <if test="liableperson1 != null" >
+        #{liableperson1,jdbcType=VARCHAR},
+      </if>
+      <if test="liableperson2 != null" >
+        #{liableperson2,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createid != null" >
+        #{createid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateid != null" >
+        #{updateid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="censusadrress != null" >
+        #{censusadrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adrress != null" >
+        #{adrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="loanusage != null" >
+        #{loanusage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moon.admin.po.CarloadExample" resultType="java.lang.Integer" >
+    select count(*) from m_carloan_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update m_carloan_form
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appno != null" >
+        APPNO = #{record.appno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanpersonname != null" >
+        LOANPERSONNAME = #{record.loanpersonname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null" >
+        IDCARD = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        AGE = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.marriage != null" >
+        MARRIAGE = #{record.marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.post != null" >
+        POST = #{record.post,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyphone != null" >
+        COMPANYPHONE = #{record.companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sencodcontact != null" >
+        SENCODCONTACT = #{record.sencodcontact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sencodphone != null" >
+        SENCODPHONE = #{record.sencodphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanamount != null" >
+        LOANAMOUNT = #{record.loanamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loanlimit != null" >
+        LOANLIMIT = #{record.loanlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.loanlimitbegin != null" >
+        LOANLIMITBEGIN = #{record.loanlimitbegin,jdbcType=DATE},
+      </if>
+      <if test="record.loanlimitend != null" >
+        LOANLIMITEND = #{record.loanlimitend,jdbcType=DATE},
+      </if>
+      <if test="record.payrate != null" >
+        PAYRATE = #{record.payrate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carloantype != null" >
+        CARLOANTYPE = #{record.carloantype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carbrandstyle != null" >
+        CARBRANDSTYLE = #{record.carbrandstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cartrademark != null" >
+        CARTRADEMARK = #{record.cartrademark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carregcity != null" >
+        CARREGCITY = #{record.carregcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carengineno != null" >
+        CARENGINENO = #{record.carengineno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carframeno != null" >
+        CARFRAMENO = #{record.carframeno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carbuytime != null" >
+        CARBUYTIME = #{record.carbuytime,jdbcType=DATE},
+      </if>
+      <if test="record.carprice != null" >
+        CARPRICE = #{record.carprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.evaluateprice != null" >
+        EVALUATEPRICE = #{record.evaluateprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.evaluator != null" >
+        EVALUATOR = #{record.evaluator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluatetime != null" >
+        EVALUATETIME = #{record.evaluatetime,jdbcType=DATE},
+      </if>
+      <if test="record.liableperson1 != null" >
+        LIABLEPERSON1 = #{record.liableperson1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liableperson2 != null" >
+        LIABLEPERSON2 = #{record.liableperson2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createid != null" >
+        CREATEID = #{record.createid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateid != null" >
+        UPDATEID = #{record.updateid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.censusadrress != null" >
+        CENSUSADRRESS = #{record.censusadrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.adrress != null" >
+        ADRRESS = #{record.adrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.company != null" >
+        COMPANY = #{record.company,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.loanusage != null" >
+        LOANUSAGE = #{record.loanusage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update m_carloan_form
+    set ID = #{record.id,jdbcType=VARCHAR},
+      APPNO = #{record.appno,jdbcType=VARCHAR},
+      LOANPERSONNAME = #{record.loanpersonname,jdbcType=VARCHAR},
+      IDCARD = #{record.idcard,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=VARCHAR},
+      AGE = #{record.age,jdbcType=INTEGER},
+      MARRIAGE = #{record.marriage,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      POST = #{record.post,jdbcType=VARCHAR},
+      COMPANYPHONE = #{record.companyphone,jdbcType=VARCHAR},
+      SENCODCONTACT = #{record.sencodcontact,jdbcType=VARCHAR},
+      SENCODPHONE = #{record.sencodphone,jdbcType=VARCHAR},
+      LOANAMOUNT = #{record.loanamount,jdbcType=DECIMAL},
+      LOANLIMIT = #{record.loanlimit,jdbcType=INTEGER},
+      LOANLIMITBEGIN = #{record.loanlimitbegin,jdbcType=DATE},
+      LOANLIMITEND = #{record.loanlimitend,jdbcType=DATE},
+      PAYRATE = #{record.payrate,jdbcType=VARCHAR},
+      CARLOANTYPE = #{record.carloantype,jdbcType=VARCHAR},
+      CARBRANDSTYLE = #{record.carbrandstyle,jdbcType=VARCHAR},
+      CARTRADEMARK = #{record.cartrademark,jdbcType=VARCHAR},
+      CARREGCITY = #{record.carregcity,jdbcType=VARCHAR},
+      CARENGINENO = #{record.carengineno,jdbcType=VARCHAR},
+      CARFRAMENO = #{record.carframeno,jdbcType=VARCHAR},
+      CARBUYTIME = #{record.carbuytime,jdbcType=DATE},
+      CARPRICE = #{record.carprice,jdbcType=DECIMAL},
+      EVALUATEPRICE = #{record.evaluateprice,jdbcType=DECIMAL},
+      EVALUATOR = #{record.evaluator,jdbcType=VARCHAR},
+      EVALUATETIME = #{record.evaluatetime,jdbcType=DATE},
+      LIABLEPERSON1 = #{record.liableperson1,jdbcType=VARCHAR},
+      LIABLEPERSON2 = #{record.liableperson2,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATEID = #{record.createid,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      UPDATEID = #{record.updateid,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      CENSUSADRRESS = #{record.censusadrress,jdbcType=LONGVARCHAR},
+      ADRRESS = #{record.adrress,jdbcType=LONGVARCHAR},
+      COMPANY = #{record.company,jdbcType=LONGVARCHAR},
+      LOANUSAGE = #{record.loanusage,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update m_carloan_form
+    set ID = #{record.id,jdbcType=VARCHAR},
+      APPNO = #{record.appno,jdbcType=VARCHAR},
+      LOANPERSONNAME = #{record.loanpersonname,jdbcType=VARCHAR},
+      IDCARD = #{record.idcard,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=VARCHAR},
+      AGE = #{record.age,jdbcType=INTEGER},
+      MARRIAGE = #{record.marriage,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      POST = #{record.post,jdbcType=VARCHAR},
+      COMPANYPHONE = #{record.companyphone,jdbcType=VARCHAR},
+      SENCODCONTACT = #{record.sencodcontact,jdbcType=VARCHAR},
+      SENCODPHONE = #{record.sencodphone,jdbcType=VARCHAR},
+      LOANAMOUNT = #{record.loanamount,jdbcType=DECIMAL},
+      LOANLIMIT = #{record.loanlimit,jdbcType=INTEGER},
+      LOANLIMITBEGIN = #{record.loanlimitbegin,jdbcType=DATE},
+      LOANLIMITEND = #{record.loanlimitend,jdbcType=DATE},
+      PAYRATE = #{record.payrate,jdbcType=VARCHAR},
+      CARLOANTYPE = #{record.carloantype,jdbcType=VARCHAR},
+      CARBRANDSTYLE = #{record.carbrandstyle,jdbcType=VARCHAR},
+      CARTRADEMARK = #{record.cartrademark,jdbcType=VARCHAR},
+      CARREGCITY = #{record.carregcity,jdbcType=VARCHAR},
+      CARENGINENO = #{record.carengineno,jdbcType=VARCHAR},
+      CARFRAMENO = #{record.carframeno,jdbcType=VARCHAR},
+      CARBUYTIME = #{record.carbuytime,jdbcType=DATE},
+      CARPRICE = #{record.carprice,jdbcType=DECIMAL},
+      EVALUATEPRICE = #{record.evaluateprice,jdbcType=DECIMAL},
+      EVALUATOR = #{record.evaluator,jdbcType=VARCHAR},
+      EVALUATETIME = #{record.evaluatetime,jdbcType=DATE},
+      LIABLEPERSON1 = #{record.liableperson1,jdbcType=VARCHAR},
+      LIABLEPERSON2 = #{record.liableperson2,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATEID = #{record.createid,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      UPDATEID = #{record.updateid,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moon.admin.po.CarloadWithBLOBs" >
+    update m_carloan_form
+    <set >
+      <if test="appno != null" >
+        APPNO = #{appno,jdbcType=VARCHAR},
+      </if>
+      <if test="loanpersonname != null" >
+        LOANPERSONNAME = #{loanpersonname,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IDCARD = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marriage != null" >
+        MARRIAGE = #{marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        POST = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="companyphone != null" >
+        COMPANYPHONE = #{companyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sencodcontact != null" >
+        SENCODCONTACT = #{sencodcontact,jdbcType=VARCHAR},
+      </if>
+      <if test="sencodphone != null" >
+        SENCODPHONE = #{sencodphone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanamount != null" >
+        LOANAMOUNT = #{loanamount,jdbcType=DECIMAL},
+      </if>
+      <if test="loanlimit != null" >
+        LOANLIMIT = #{loanlimit,jdbcType=INTEGER},
+      </if>
+      <if test="loanlimitbegin != null" >
+        LOANLIMITBEGIN = #{loanlimitbegin,jdbcType=DATE},
+      </if>
+      <if test="loanlimitend != null" >
+        LOANLIMITEND = #{loanlimitend,jdbcType=DATE},
+      </if>
+      <if test="payrate != null" >
+        PAYRATE = #{payrate,jdbcType=VARCHAR},
+      </if>
+      <if test="carloantype != null" >
+        CARLOANTYPE = #{carloantype,jdbcType=VARCHAR},
+      </if>
+      <if test="carbrandstyle != null" >
+        CARBRANDSTYLE = #{carbrandstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="cartrademark != null" >
+        CARTRADEMARK = #{cartrademark,jdbcType=VARCHAR},
+      </if>
+      <if test="carregcity != null" >
+        CARREGCITY = #{carregcity,jdbcType=VARCHAR},
+      </if>
+      <if test="carengineno != null" >
+        CARENGINENO = #{carengineno,jdbcType=VARCHAR},
+      </if>
+      <if test="carframeno != null" >
+        CARFRAMENO = #{carframeno,jdbcType=VARCHAR},
+      </if>
+      <if test="carbuytime != null" >
+        CARBUYTIME = #{carbuytime,jdbcType=DATE},
+      </if>
+      <if test="carprice != null" >
+        CARPRICE = #{carprice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateprice != null" >
+        EVALUATEPRICE = #{evaluateprice,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluator != null" >
+        EVALUATOR = #{evaluator,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluatetime != null" >
+        EVALUATETIME = #{evaluatetime,jdbcType=DATE},
+      </if>
+      <if test="liableperson1 != null" >
+        LIABLEPERSON1 = #{liableperson1,jdbcType=VARCHAR},
+      </if>
+      <if test="liableperson2 != null" >
+        LIABLEPERSON2 = #{liableperson2,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createid != null" >
+        CREATEID = #{createid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateid != null" >
+        UPDATEID = #{updateid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="censusadrress != null" >
+        CENSUSADRRESS = #{censusadrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adrress != null" >
+        ADRRESS = #{adrress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="company != null" >
+        COMPANY = #{company,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="loanusage != null" >
+        LOANUSAGE = #{loanusage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.moon.admin.po.CarloadWithBLOBs" >
+    update m_carloan_form
+    set APPNO = #{appno,jdbcType=VARCHAR},
+      LOANPERSONNAME = #{loanpersonname,jdbcType=VARCHAR},
+      IDCARD = #{idcard,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      MARRIAGE = #{marriage,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      POST = #{post,jdbcType=VARCHAR},
+      COMPANYPHONE = #{companyphone,jdbcType=VARCHAR},
+      SENCODCONTACT = #{sencodcontact,jdbcType=VARCHAR},
+      SENCODPHONE = #{sencodphone,jdbcType=VARCHAR},
+      LOANAMOUNT = #{loanamount,jdbcType=DECIMAL},
+      LOANLIMIT = #{loanlimit,jdbcType=INTEGER},
+      LOANLIMITBEGIN = #{loanlimitbegin,jdbcType=DATE},
+      LOANLIMITEND = #{loanlimitend,jdbcType=DATE},
+      PAYRATE = #{payrate,jdbcType=VARCHAR},
+      CARLOANTYPE = #{carloantype,jdbcType=VARCHAR},
+      CARBRANDSTYLE = #{carbrandstyle,jdbcType=VARCHAR},
+      CARTRADEMARK = #{cartrademark,jdbcType=VARCHAR},
+      CARREGCITY = #{carregcity,jdbcType=VARCHAR},
+      CARENGINENO = #{carengineno,jdbcType=VARCHAR},
+      CARFRAMENO = #{carframeno,jdbcType=VARCHAR},
+      CARBUYTIME = #{carbuytime,jdbcType=DATE},
+      CARPRICE = #{carprice,jdbcType=DECIMAL},
+      EVALUATEPRICE = #{evaluateprice,jdbcType=DECIMAL},
+      EVALUATOR = #{evaluator,jdbcType=VARCHAR},
+      EVALUATETIME = #{evaluatetime,jdbcType=DATE},
+      LIABLEPERSON1 = #{liableperson1,jdbcType=VARCHAR},
+      LIABLEPERSON2 = #{liableperson2,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATEID = #{createid,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATEID = #{updateid,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      CENSUSADRRESS = #{censusadrress,jdbcType=LONGVARCHAR},
+      ADRRESS = #{adrress,jdbcType=LONGVARCHAR},
+      COMPANY = #{company,jdbcType=LONGVARCHAR},
+      LOANUSAGE = #{loanusage,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moon.admin.po.Carload" >
+    update m_carloan_form
+    set APPNO = #{appno,jdbcType=VARCHAR},
+      LOANPERSONNAME = #{loanpersonname,jdbcType=VARCHAR},
+      IDCARD = #{idcard,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      MARRIAGE = #{marriage,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      POST = #{post,jdbcType=VARCHAR},
+      COMPANYPHONE = #{companyphone,jdbcType=VARCHAR},
+      SENCODCONTACT = #{sencodcontact,jdbcType=VARCHAR},
+      SENCODPHONE = #{sencodphone,jdbcType=VARCHAR},
+      LOANAMOUNT = #{loanamount,jdbcType=DECIMAL},
+      LOANLIMIT = #{loanlimit,jdbcType=INTEGER},
+      LOANLIMITBEGIN = #{loanlimitbegin,jdbcType=DATE},
+      LOANLIMITEND = #{loanlimitend,jdbcType=DATE},
+      PAYRATE = #{payrate,jdbcType=VARCHAR},
+      CARLOANTYPE = #{carloantype,jdbcType=VARCHAR},
+      CARBRANDSTYLE = #{carbrandstyle,jdbcType=VARCHAR},
+      CARTRADEMARK = #{cartrademark,jdbcType=VARCHAR},
+      CARREGCITY = #{carregcity,jdbcType=VARCHAR},
+      CARENGINENO = #{carengineno,jdbcType=VARCHAR},
+      CARFRAMENO = #{carframeno,jdbcType=VARCHAR},
+      CARBUYTIME = #{carbuytime,jdbcType=DATE},
+      CARPRICE = #{carprice,jdbcType=DECIMAL},
+      EVALUATEPRICE = #{evaluateprice,jdbcType=DECIMAL},
+      EVALUATOR = #{evaluator,jdbcType=VARCHAR},
+      EVALUATETIME = #{evaluatetime,jdbcType=DATE},
+      LIABLEPERSON1 = #{liableperson1,jdbcType=VARCHAR},
+      LIABLEPERSON2 = #{liableperson2,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATEID = #{createid,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATEID = #{updateid,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
